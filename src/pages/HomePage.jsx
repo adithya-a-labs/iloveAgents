@@ -185,25 +185,25 @@ export default function HomePage() {
           Open source. Community-built. Bring your own key.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <button
-          onClick={() => setIsRecommendationWizardOpen(true)}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
-            bg-accent text-white hover:bg-accent-hover transition-all duration-200
-            shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/30 active:scale-[0.97]"
-        >
-          <Sparkles size={16} />
-          Find my agent
-        </button>
-        <button
-          onClick={() => navigate('/battle')}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
-            bg-gradient-to-r from-yellow-500 to-amber-500 text-gray-950
-            hover:from-yellow-400 hover:to-amber-400 transition-all duration-200
-            shadow-md shadow-yellow-500/20 hover:shadow-yellow-500/30 active:scale-[0.97]"
-        >
-          <Swords size={16} />
-          Enter Battle Mode
-        </button>
+          <button
+            onClick={() => setIsRecommendationWizardOpen(true)}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
+              bg-accent text-white hover:bg-accent-hover transition-all duration-200
+              shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/30 active:scale-[0.97]"
+          >
+            <Sparkles size={16} />
+            Find my agent
+          </button>
+          <button
+            onClick={() => navigate('/battle')}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
+              bg-gradient-to-r from-yellow-500 to-amber-500 text-gray-950
+              hover:from-yellow-400 hover:to-amber-400 transition-all duration-200
+              shadow-md shadow-yellow-500/20 hover:shadow-yellow-500/30 active:scale-[0.97]"
+          >
+            <Swords size={16} />
+            Enter Battle Mode
+          </button>
         </div>
       </div>
 
