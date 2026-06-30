@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart, Swords, GitBranch, ChevronDown } from 'lucide-react'
-import { loadAllAgents } from '../agents/registry'
+import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart, Swords, GitBranch, ChevronDown, Sparkles } from 'lucide-react'
 import AgentCardSkeleton from '../components/AgentCardSkeleton'
 import AgentCard from '../components/AgentCard'
 import { useFavorites } from '../lib/useFavorites'
@@ -9,6 +8,8 @@ import { useHistory } from '../lib/useHistory'
 import RecentRuns from '../components/RecentRuns'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts'
+import { useAgents } from '../lib/useAgents'
+import RecommendationWizardModal from '../components/recommendation/RecommendationWizardModal'
 
 // Category icons/colors for the filter pills
 const categoryMeta = {
@@ -30,12 +31,8 @@ const defaultMeta = { color: 'from-gray-500 to-gray-400', ring: 'ring-gray-500/3
 export default function HomePage() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
-  const [agents, setAgents] = useState([])
-  const [agentsLoading, setAgentsLoading] = useState(true)
-
-useEffect(() => {
-  loadAllAgents().then(setAgents).finally(() => setAgentsLoading(false))
-}, [])
+  const { agents, loading: agentsLoading } = useAgents()
+  const [isRecommendationWizardOpen, setIsRecommendationWizardOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const allCategories = useMemo(() => {
     return [...new Set(agents.map((a) => a.category))].sort()
@@ -178,6 +175,7 @@ useEffect(() => {
 
   return (
     <div className="animate-fade-in">
+      <RecommendationWizardModal open={isRecommendationWizardOpen} onClose={() => setIsRecommendationWizardOpen(false)} />
       {/* Hero */}
       <div className="premium-section text-center mb-10 pt-2 overflow-hidden">
         <h1 className="text-3xl sm:text-4xl font-bold dark:text-text-primary text-gray-900 mb-3 tracking-tight text-balance">
@@ -186,6 +184,16 @@ useEffect(() => {
         <p className="text-sm dark:text-text-secondary text-gray-500 max-w-md mx-auto leading-relaxed mb-4 text-balance">
           Open source. Community-built. Bring your own key.
         </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button
+          onClick={() => setIsRecommendationWizardOpen(true)}
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
+            bg-accent text-white hover:bg-accent-hover transition-all duration-200
+            shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/30 active:scale-[0.97]"
+        >
+          <Sparkles size={16} />
+          Find my agent
+        </button>
         <button
           onClick={() => navigate('/battle')}
           className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
@@ -196,6 +204,7 @@ useEffect(() => {
           <Swords size={16} />
           Enter Battle Mode
         </button>
+        </div>
       </div>
 
       {/* Stat Cards */}
